@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpha Manage/Get</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;600&display=swap">
+    
+    <style>
+        body {
+            background-color: #162a47;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        .RegInst {
+            background: linear-gradient(135deg, #243B55 0%, #141E30 100%);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        header {
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            color: #00c6ff;
+            font-family: 'Georgia', serif;
+            font-size: 2rem;
+            animation: slideDown 1s ease-in-out;
+            margin: 10px 0;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            width: 100px;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #00e6e6;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            display: block;
+            text-align: left;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="tel"],
+        select {
+            padding: 10px;
+            width: 100%;
+            background-color: #293a4a;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            margin-bottom: 15px;
+            outline: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        input:focus {
+            background-color: #1e2937;
+            transform: scale(1.02);
+        }
+
+        .form-group{
+            padding: 12px;
+        }
+
+        .form-group a{
+            color: white;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            background-color: #00b4d8;
+            color: #fff;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background-color: #0077b6;
+            transform: scale(1.05);
+        }
+
+        footer {
+            background-color: #021828;
+            padding: 15px;
+            text-align: center;
+            color: #fff;
+            width: 100%;
+            margin-top: 20px;
+            position: relative;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #00d1b2;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #00bfa5;
+        }
+
+        /* Responsive Styling */
+        @media screen and (max-width: 768px) {
+            .RegInst {
+                padding: 30px;
+                max-width: 90%;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            body {
+                padding: 20px;
+            }
+
+            .RegInst {
+                padding: 20px;
+            }
+
+            input[type="text"],
+            input[type="password"],
+            input[type="tel"],
+            select {
+                font-size: 0.9rem;
+                padding: 8px;
+            }
+
+            button {
+                font-size: 1rem;
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="RegInst">
+        <header class="AM">
+            <div class="logo">
+                <img src="path/to/your/logo.png" alt="Logo" />
+            </div>
+            <h1>Alpha Manage</h1>
+        </header>
+
+        <div class="RegisterForm">
+            <h2>Get Alpha Manage</h2>
+
+            <form id="LoginAM">
+                <label for="Email">Email:</label>
+                <input type="text" id="Email" name="Email" placeholder="Enter Email" required>
+                <label for="Password">Password:</label>
+                <input type="password" id="Password" name="Password" placeholder="Enter Password" required>
+
+                <button type="LoginButton" onclick="Login()">Login</button>
+
+                <div class="form-group">
+                    <a href="#" onclick="showRegister()">New User? Register!</a>
+                </div>
+            </form>
+
+            <form id="RegisterAM" style="display: none;">
+                <label for="RegName">Name:</label>
+                <input type="text" id="RegName" name="student_name" placeholder="Enter Student Name" required>
+
+                <label for="RegUni">University:</label>
+                <input type="text" id="RegUni" name="university" placeholder="Enter University" required>
+
+                <label for="RegDep">Department:</label>
+                <input type="text" id="RegDep" name="department" placeholder="Enter Department" required>
+
+                <label for="RegSem">Semester:</label>
+                <select name="Semester" id="RegSem" required>
+                    <option value="">Select Semester</option>
+                    <option value="1Year">1 Year</option>
+                    <option value="2Year">2 Year</option>
+                    <option value="3Year">3 Year</option>
+                    <option value="4Year">4 Year</option>
+                </select>
+
+                <label for="RegEmail">Email:</label>
+                <input type="text" id="RegEmail" name="Reg_Email" placeholder="Enter Email" required>
+                <div id="message"></div>
+
+                <label for="RegPassword">Password:</label>
+                <input type="password" id="RegPassword" name="Reg_Password" placeholder="Enter Password" required>
+
+                <label for="RegPhone">Phone:</label>
+                <input type="tel" id="RegPhone" name="Reg_Phone" placeholder="Enter Phone" required>
+
+                <button type="signupbutton" onclick="Register()">Register</button>
+
+                <div class="form-group">
+                    <a href="#" onclick="showLogin()">Already have an Account? Login!</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 <a href="https://alphatechitco.netlify.app">Alpha Manage</a> Owned & Developed By <a href="https://alphatechitco.netlify.app">Alpha Tech</a></p>
+    </footer>
+
+    <script>
+        document.getElementById('RegEmail').addEventListener('input', async function(event){
+            const email=event.target.value;
+            const message=document.getElementById('message');
+            const signupButton=document.querySelector('button[type="signupbutton"]')
+
+            try{
+            const response=await fetch('/users/checkEmail', {
+                method:'POST',
+                headers:{
+                    'Content-Type':'Application/JSON',
+                },
+                body:JSON.stringify({email})
+            })
+
+            const result=await response.json();
+
+            if(result.success){
+                message.textContent=result.message;
+                signupButton.disabled=false;
+            }
+            if(!result.success){
+                message.textContent=result.message;
+                signupButton.disabled=true;
+            }
+
+        } catch(error){
+            throw new Error("Error!")
+        }
+
+
+        })
+        function showRegister() {
+            document.getElementById('LoginAM').style.display = 'none';
+            document.getElementById('RegisterAM').style.display = 'block';
+        }
+
+        function showLogin() {
+            document.getElementById('LoginAM').style.display = 'block';
+            document.getElementById('RegisterAM').style.display = 'none';
+        }
+
+        async function Login() {
+            const email = document.getElementById('Email').value;
+            const password = document.getElementById('Password').value;
+
+            try {
+                const response = await fetch('/users/LoginAM', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+
+                const responseData = await response.json();
+
+                if (responseData.success) {
+                    window.location.href = 'dashboard.html';
+                }
+
+            } catch (error) {
+                alert("Error Connecting Server!");
+            }
+        }
+
+        async function Register() {
+            const email = document.getElementById('RegEmail').value;
+            const password = document.getElementById('RegPassword').value;
+            const name = document.getElementById('RegName').value;
+            const university = document.getElementById('RegUni').value;
+            const department = document.getElementById('RegDep').value;
+            const semester = document.getElementById('RegSem').value;
+            const phone = document.getElementById('RegPhone').value;
+            alert(phone)
+
+            try {
+                const response = await fetch('/users/RegisterAM', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, university, department, semester, email, password, phone }),
+                });
+
+                const responseData = await response.json();
+
+                if (responseData.success) {
+                    window.location.href = 'dashboard.html';
+                }
+            } catch (error) {
+                alert("Error Connecting Server!");
+            }
+        }
+    </script>
+</body>
+
+</html>

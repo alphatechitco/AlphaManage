@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AM/Dashboard</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;600&display=swap">
+ 
+        <style>
+            body{
+                background-color: #162a47;
+                font-family: 'Roboto', sans-serif;
+                margin: 0;
+                padding: 0;
+                justify-content: center;
+                align-items: center;
+                display: flex;
+                flex-direction: column;
+                height: 100vh;
+
+            }
+
+            .Menu{
+                background: linear-gradient(135deg, #243B55 0%, #141E30 100%);
+                width:80%;
+                max-width: 400px;
+                padding: 20px;
+                border-radius: 8px;
+                text-align: center;
+
+            }
+
+            
+            h2{
+
+            }
+            button{
+                width: 100%;
+                margin: 10px;
+                padding: 10px 0;
+            }
+        </style>
+
+    </head>
+
+    <body>
+
+        <div class="Menu">
+            <h2>Alpha Manage</h2>
+            <button onclick="navigateTo('/ManageTasks.html')">Manage Tasks</button>
+            <button onclick="navigateTo('/TrackPerformance.html')">Track Performance</button>
+            <button onclick="navigateTo('/createClass.html')">Classes</button>
+
+        </div>
+        
+    </body>
+
+    <script>
+        function navigateTo(page){
+            window.location.href=page
+        }
+    </script>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AM/Classes</title>
+
+
+    </head>
+
+    <body>
+        
+        <div id="classActions">
+            
+            <form action="" id="classAdd">
+                <label for="ClassName">ClassName:</label>
+                <input type="text" id="ClassName" required>
+
+                <button onclick="AddClass()">Add Class</button>
+                <div id="MessageAdd">
+
+                </div>
+
+            </form>
+
+        </div>
+    </body>
+
+    <script>
+        async function AddClass(){
+           const class_name=document.getElementById('ClassName').value;
+           
+
+           const response=await fetch('/Classes/addClass', {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'Application/JSON',
+            },
+            body:JSON.stringify({class_name:class_name})
+           })
+
+           const data=await response.json();
+
+           if(data.success){
+            const message=document.getElementById('MessageAdd');
+            message.textContent="Success"
+           } else{
+            const message=document.getElementById('MessageAdd');
+            message.textContent="Fail To Add"
+            
+           }
+        }
+
+        
+
+    </script>
+</html>

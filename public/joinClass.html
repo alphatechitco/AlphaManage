@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <title>Join</title>
+</head>
+
+<body>
+
+    <div class="JoinClass">
+        <form action="" id="joinForm">
+            <label for="Classes">Classes:</label>
+            <select id="EstClasses">
+
+            </select>
+
+            <button id="joinClasses"  onclick="joinClass()">Join</button>
+        </form>
+    </div>
+    
+</body>
+
+<script>
+
+    document.getElementById('DOMContentLoaded', async function(event){
+        const response=await fetch('/classes/getClasses', {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'Application/JSON',
+            },
+            body: JSON.stringify({})
+        })
+
+        const data=await response.json();
+
+        for(let i=0; i<data.length; i++){
+        const option=document.createElement('option');
+        option.textContent=data.class_name;
+        option.value=data.class_id;
+        document.getElementById('EstClasses').appendChild(option);
+        }
+    })
+
+    async function joinClass(){
+        const user_id=localStorage.getItem('user_id');
+        const class_id=document.getElementById('EstClasses');
+
+        const response=await fetch('/classes/joinClass', {
+            method: 'POST',
+            headers:{
+                'Content-Type':'Application/JSON',
+            },
+            body: JSON.stringify({user_id:user_id, class_id:class_id})
+        })
+
+        const data=await response.json();
+
+        if(data.success){
+            
+        }
+    }
+</script>
+</html>
