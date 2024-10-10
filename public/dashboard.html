@@ -35,6 +35,7 @@
 
             
             h2{
+                color: aliceblue;
 
             }
             button{
@@ -53,12 +54,16 @@
             <button onclick="navigateTo('/ManageTasks.html')">Manage Tasks</button>
             <button onclick="navigateTo('/TrackPerformance.html')">Track Performance</button>
             <button onclick="navigateTo('/createClass.html')">Classes</button>
+            <button onclick="navigateTo('joinClass.html')">Join Classes</button>
 
         </div>
         
     </body>
 
     <script>
+
+        document.addEventListener("DOMContentLoaded", async function(event){
+        })
         function navigateTo(page){
             window.location.href=page
         }

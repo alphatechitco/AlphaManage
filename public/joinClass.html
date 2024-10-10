@@ -1,66 +1,176 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;600&display=swap">
+
+    <style>
+        body {
+            background-color: #162a47;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        .JoinClass {
+            background: linear-gradient(135deg, #243B55 0%, #141E30 100%);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px auto;
+            animation: fadeIn 1s ease-in-out;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1.0);
+            }
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            text-align: left;
+            color: #00e6e6;
+        }
+
+        select {
+            padding: 12px;
+            width: 100%;
+            background-color: bisque;
+            color: black;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        select:focus {
+            background-color: #ffe5b4;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            background-color: #00b4d8;
+            color: #fff;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background-color: #0077b6;
+            transform: scale(1.05);
+        }
+
+        button:focus {
+            outline: none;
+        }
+    </style>
 </head>
 
 <body>
 
     <div class="JoinClass">
-        <form action="" id="joinForm">
-            <label for="Classes">Classes:</label>
-            <select id="EstClasses">
-
+        <form id="joinForm" onsubmit="joinClass(event)">
+            <label for="EstClasses">Classes:</label>
+            <select id="EstClasses" required>
+                <option value="">Select a Class</option>
             </select>
 
-            <button id="joinClasses"  onclick="joinClass()">Join</button>
+            <button type="submit" id="joinClasses">Join</button>
         </form>
     </div>
-    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            try {
+                const response = await fetch('/classes/getClasses', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                const EstClasses = document.getElementById('EstClasses');
+                
+                EstClasses.innerHTML = '<option value="">Select a Class</option>'; // Reset the options
+
+                data.forEach(row => {
+                    const option = document.createElement('option');
+                    option.value = row.class_id;
+                    option.textContent = row.class_name;
+                    EstClasses.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error fetching classes:', error);
+            }
+        });
+
+        async function joinClass(event) {
+            event.preventDefault(); // Prevent form from submitting normally
+
+            const user_id = localStorage.getItem('user_id');
+            const class_id = document.getElementById('EstClasses').value;
+
+            if (!class_id) {
+                alert('Please select a class to join.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/classes/joinClass', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ user_id, class_id })
+                });
+
+                const data = await response.json();
+
+                if (data.join) {
+                    alert('You have successfully joined the class!');
+                } else {
+                    alert('Failed to join the class. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error joining class:', error);
+                alert('Error joining class. Please try again.');
+            }
+        }
+    </script>
+
 </body>
 
-<script>
-
-    document.getElementById('DOMContentLoaded', async function(event){
-        const response=await fetch('/classes/getClasses', {
-            method: 'POST',
-            headers:{
-                'Content-Type': 'Application/JSON',
-            },
-            body: JSON.stringify({})
-        })
-
-        const data=await response.json();
-
-        for(let i=0; i<data.length; i++){
-        const option=document.createElement('option');
-        option.textContent=data.class_name;
-        option.value=data.class_id;
-        document.getElementById('EstClasses').appendChild(option);
-        }
-    })
-
-    async function joinClass(){
-        const user_id=localStorage.getItem('user_id');
-        const class_id=document.getElementById('EstClasses');
-
-        const response=await fetch('/classes/joinClass', {
-            method: 'POST',
-            headers:{
-                'Content-Type':'Application/JSON',
-            },
-            body: JSON.stringify({user_id:user_id, class_id:class_id})
-        })
-
-        const data=await response.json();
-
-        if(data.success){
-            
-        }
-    }
-</script>
 </html>

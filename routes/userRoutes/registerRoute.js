@@ -76,8 +76,8 @@ router.post('/LoginAM', async (req,res)=>{
             const userID=result.userID;
 
             const token=jwt.sign({userID}, JWT_Secret, {expiresIn:'1h'});
-
-            return res.json({success:true,token,message:"Login Successful"})
+            console.log("Router Emit token: ", token)
+            return res.json({success:true,token,userID,message:"Login Successful"})
         }
 
         return res.status(409).send({success:false, message:"Invalid Password"})
