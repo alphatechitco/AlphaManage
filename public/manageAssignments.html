@@ -1,16 +1,125 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Assignmnents</title>
-    </head>
+<head>
+    <title>Assignments</title>
+</head>
 
-    <body>
+<style>
+    
+    body {
+        background: #162a47;
+        flex-direction: column;
+        margin: 0px;
+        padding: 0px;
+        font-family: 'Roboto', 'sans-serif';
+    }
+    .assignment-item {
+        background: whitesmoke;
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 8px;
+    }
+
+</style>
+
+<body>
+    
+    <div id="ManageAssignments">
+        <h1>Assignments:</h1>
+        <form id="pushForm">
+            <label for="assignment">New Assignment:</label>
+            <input type="text" id="assignment" name="assignment" required>
+            <button type="submit">Add Assignment</button>
+        </form>
+    </div>
+
+    <div class="show_Assignments">
+        <h1>Current Assignments:</h1>
+        <div id="assignmentsContainer"></div>
+    </div>
+</body>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', async function(event){
+        const user_id = localStorage.getItem('user_id');
+        const assignmentsContainer = document.getElementById('assignmentsContainer');
         
-        <div id="ManageAssignments">
-            <h1>Assignmnents:</h1>
-            <form id="pushForm">
-                <label for="Assignment"></label>
-            </form>
-        </div>
-    </body>
+        // Fetch and display existing assignments
+        try {
+            console.log("User ID: ", user_id);
+            const response = await fetch('/tasks/getAssignments', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'Application/JSON',
+                },
+                body: JSON.stringify({ user_id })
+            });
+
+            if (!response.ok) {
+                console.log("Network response was not ok.");
+                return;
+            }
+
+            const data = await response.json();
+
+            // Display assignments in individual sections
+            data.forEach((assignment) => {
+                const assignmentDiv = document.createElement('div');
+                assignmentDiv.classList.add('assignment-item');
+                assignmentDiv.innerHTML = `
+                    <h3>Assignment Topic: ${assignment.assignment_topic}</h3>
+                    <p><strong>Due Date:</strong> ${new Date(assignment.assignment_due).toLocaleString()}</p>
+                    <p><strong>Notes:</strong> ${assignment.assignment_notes}</p>
+                    <p><strong>AI Prompts:</strong> ${assignment.ai_prompts}</p>
+                    <p><strong>AI Notes:</strong> ${assignment.ai_notes}</p>
+                    <p><strong>Group Mates:</strong> ${assignment.group_mates}</p>
+                    <p><strong>Reminder 1:</strong> ${new Date(assignment.assignment_reminder1).toLocaleString()}</p>
+                    <p><strong>Reminder 2:</strong> ${new Date(assignment.assignment_reminder2).toLocaleString()}</p>
+                    <p><strong>Reminder 3:</strong> ${new Date(assignment.assignment_reminder3).toLocaleString()}</p>
+                `;
+                assignmentsContainer.appendChild(assignmentDiv);
+            });
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+
+        // Handle form submission for new assignments
+        const pushForm = document.getElementById('pushForm');
+        pushForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const assignmentInput = document.getElementById('assignment');
+            const newAssignment = assignmentInput.value.trim();
+
+            if (!newAssignment) return;
+
+            try {
+                const response = await fetch('/tasks/addAssignment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'Application/JSON',
+                    },
+                    body: JSON.stringify({ user_id, assignment: newAssignment })
+                });
+
+                if (!response.ok) {
+                    console.log("Error adding assignment");
+                    return;
+                }
+
+                const result = await response.json();
+                if (result.success) {
+                    location.reload(); // Refresh to load new assignments
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+    
+</script>
+
 </html>

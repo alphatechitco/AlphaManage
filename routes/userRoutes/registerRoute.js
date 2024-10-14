@@ -8,13 +8,13 @@ const JWT_Secret = process.env.JWT_SECRET || 'your-secret-key';  // You can load
 
 router.post('/RegisterAM', async (req, res) => {
     const um = new UM();
-    const { name, university, department, semester, email, password, phone } = req.body;
+    const { name, university, department, semester, role, role_id, email, password, phone } = req.body;
 
     console.log("API Request Received: ", name, university);
 
     try {
         // Attempt to register the user
-        const result = await um.registerUser(name, university, department, semester, email, phone, password);
+        const result = await um.registerUser(name, university, department, semester, role, role_id, email, phone, password);
 
         if (result.success) {
             const userID = result.userID;
@@ -76,8 +76,9 @@ router.post('/LoginAM', async (req,res)=>{
             const userID=result.userID;
 
             const token=jwt.sign({userID}, JWT_Secret, {expiresIn:'1h'});
+            const role=result.role;
             console.log("Router Emit token: ", token)
-            return res.json({success:true,token,userID,message:"Login Successful"})
+            return res.json({success:true,token,userID,role,message:"Login Successful"})
         }
 
         return res.status(409).send({success:false, message:"Invalid Password"})

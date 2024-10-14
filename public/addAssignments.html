@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Add Assignments</title>
+
+        <style>
+
+            body{
+                background: #162a47;
+                font-family: 'Roboto', sans-serif;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 0;
+                margin: 0;
+                min-height: 100vh;
+            }
+
+            .assignmentDiv{
+                background-color: lightgoldenrodyellow;
+                padding: 40px;
+                border-radius: 12px;
+                width: 100%;
+                max-width: 450px;
+                align-items: center;
+                text-align: center;
+                margin-bottom: 20px;
+                position: relative;
+            }
+
+            select,input{
+                padding: 10px;
+                text-align: center;
+            }
+
+        </style>
+    </head>
+    
+
+    <body>
+        
+        <div class="assignmentDiv">
+            <h1>Add Assignment</h1>
+            <form action="" id="assignmentForm">
+                <label for="assignmentTopic">Assignment Topic:</label>
+                <input type="text" id="AssignmentTopic" placeholder="Enter Assignment Tpoic:">
+
+                <label for="assignmentDueDate">Due Date:</label>
+                <input type="datetime" id="AssignmentDue">
+
+                <label for="AssignmentReminder1">Reminder 1:</label>
+                <input type="datetime" id="AssignmentR1">
+
+                <label for="AssignmentReminder1">Reminder 2:</label>
+                <input type="datetime" id="AssignmentR2">
+
+                <label for="AssignmentReminder1">Reminder 3:</label>
+                <input type="datetime" id="AssignmentR3">
+
+                <label for="groupMates">Group Mates:</label>
+                <input type="text" id="GroupMates" placeholder="Enter GroupMates ID:">
+
+                <label for="assignmentNotes">Assignment Notes:</label>
+                <input type="text" id="AssignmentNotes">
+
+                <label for="assignmentNotes">AI Notes:</label>
+                <input type="text" id="AINotes">
+
+                <label for="assignmentNotes">AI Prompts:</label>
+                <input type="text" id="AIPrompts">
+
+                <button onclick="addAssignments()">Add Assignments:</button>
+            </form>
+
+        
+        </div>
+    </body>
+    <script>
+
+        async function addAssignment(){
+            const assignment_topic = document.getElementById('AssignmentTopic').value;
+            const AssignmentDue = document.getElementById('AssignmentDue').value;
+            const name = document.getElementById('AssignmentR1').value;
+            const university = document.getElementById('AssignmentR2').value;
+            const department = document.getElementById('AssignmentR3').value;
+            const semester = document.getElementById('GroupMates').value;
+            const role=document.getElementById('AssignmentNotes').value;
+            const role_id=document.getElementById('RoleID').value
+            const phone = document.getElementById('RegPhone').value;
+           
+        }
+
+    </script>
+</html>

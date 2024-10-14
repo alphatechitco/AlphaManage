@@ -244,6 +244,14 @@
                     <option value="4Year">4 Year</option>
                 </select>
 
+                <select name="Role" id="RegRole">
+                    <option value="student">Student</option>
+                    <option value="cr">CR</option>
+                </select>
+
+                <label for="RoleID">Role ID:</label>
+                <input type="text" id="RoleID" placeholder="Enter RoleID For CR Registeration">
+
                 <label for="RegEmail">Email:</label>
                 <input type="text" id="RegEmail" name="Reg_Email" placeholder="Enter Email" required>
                 <div id="message"></div>
@@ -329,9 +337,15 @@
                 if (responseData.success) {
                     const AuthToken=responseData.token
                     const user_id=responseData.userID
+                    const role=responseData.role;
+                    if(role!='cr'){
                     window.location.href = 'dashboard.html';
+                    } else {
+                        window.location.href='crdashboard.html'
+                    }
                     localStorage.setItem('AuthToken', AuthToken)
                     localStorage.setItem("user_id", user_id)
+                    localStorage.setItem("user_role", role)
                 }
 
             } catch (error) {
@@ -346,8 +360,10 @@
             const university = document.getElementById('RegUni').value;
             const department = document.getElementById('RegDep').value;
             const semester = document.getElementById('RegSem').value;
+            const role=document.getElementById('RegRole').value;
+            const role_id=document.getElementById('RoleID').value
             const phone = document.getElementById('RegPhone').value;
-            alert(phone)
+           
 
             try {
                 const response = await fetch('/users/RegisterAM', {
@@ -355,7 +371,7 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ name, university, department, semester, email, password, phone }),
+                    body: JSON.stringify({ name, university, department, semester, role,role_id, email, password, phone }),
                 });
 
                 const responseData = await response.json();

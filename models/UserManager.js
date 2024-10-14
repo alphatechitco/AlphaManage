@@ -6,13 +6,19 @@ const zxcvbn=require('zxcvbn');
 class Register {
     constructor() {}
 
-    async registerUser(name, university, department, semester, email, phone, password) {
+    async registerUser(name, university, department, semester, role, role_id, email, phone, password) {
 
         console.log(name, university, department, semester, email, phone, password)
         try {
             // Hash password (await to handle async)
             const password_hash = await bcrypt.hash(password, 10);
             const user_id=1234
+
+            const roleStatus=await this.clearRole(role_id);
+
+            if(!roleStatus.clear){
+                role='student';
+            }
 
             // Insert user data into the 'users' table
             const { data, error } = await supabase
@@ -25,7 +31,8 @@ class Register {
                         semester,
                         email,
                         phone,
-                        password_hash // Use password_hash for the insert
+                        password_hash, // Use password_hash for the insert
+                        role
                     }
                 ]);
 
@@ -43,6 +50,32 @@ class Register {
         } catch (error) {
             throw new Error("Error While Connecting To Server! " + error.message);
         }
+    }
+
+    async clearRole(role_id){
+        console.log(role_id)
+        
+        try{
+
+            const {data, error}=await supabase
+            .from('rolepass')
+            .select('*')
+            .eq('role_id', role_id)
+
+            if(error || !data){
+                console.log("Error While Getting Role Clarification!")
+                return {clear:false, message:"Role is Unidentified!"}
+            }
+
+
+            return {clear:true, message:"Role is Identified!"}
+    
+
+        } catch(error){
+            console.log("Error: ", error)
+            throw new Error("Error While Quering Database")
+        }
+
     }
 
     // Async function responsible for email validation
@@ -99,7 +132,7 @@ class Register {
             // Query user by email
             const { data, error } = await supabase
            .from('users')
-           .select('password_hash, user_id')
+           .select('password_hash, user_id, role')
            .eq('email', email);
 
 console.log("Supabase Response - Data:", data);
@@ -111,6 +144,7 @@ console.log("Supabase Response - Error:", error);
 
             console.log("P", data[0].password_hash);
             console.log("U", data[0].user_id)
+            console.log("R", data[0].role)
             // Compare the hashed password (await to handle async)
             const isMatch = await bcrypt.compare(password, data[0].password_hash);
 
@@ -119,8 +153,9 @@ console.log("Supabase Response - Error:", error);
             }
 
             const userID = data[0].user_id;
+            const role=data[0].role;
 
-            return { success: true, userID, message: "Login Successful" };
+            return { success: true, userID, role, message: "Login Successful" };
         } catch (error) {
             throw new Error("Error Connecting To Server! " + error.message);
         }
