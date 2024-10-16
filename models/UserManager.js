@@ -124,6 +124,26 @@ class Register {
         }
     }
 
+    async getClassID(user_id){
+
+        try{
+            const {data,error} = await supabase
+            .from('class_users')
+            .select('class_id')
+            .eq('user_id', user_id)
+
+            if(error){
+                console.log("Error While Fetching Class ID, ", error)
+                return {user_id:null}
+            }
+
+            return data[0].class_id;
+        }  catch(error) {
+            throw new Error("Error Connecting To Server!" + error.message)
+        }
+
+    }
+
     async Login(email, password) {
         console.log(email);
         console.log(password);
@@ -154,8 +174,9 @@ console.log("Supabase Response - Error:", error);
 
             const userID = data[0].user_id;
             const role=data[0].role;
+            const class_id=await this.getClassID(userID)
 
-            return { success: true, userID, role, message: "Login Successful" };
+            return { success: true, userID, class_id, role, message: "Login Successful" };
         } catch (error) {
             throw new Error("Error Connecting To Server! " + error.message);
         }

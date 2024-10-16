@@ -3,6 +3,7 @@ const { use } = require("../routes/userRoutes/registerRoute");
 
 
 class classManager{
+    
     constructor(){
 
     }

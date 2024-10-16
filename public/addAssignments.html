@@ -1,99 +1,153 @@
 <!DOCTYPE html>
-
-
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Add Assignments</title>
-
-        <style>
-
-            body{
-                background: #162a47;
-                font-family: 'Roboto', sans-serif;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                padding: 0;
-                margin: 0;
-                min-height: 100vh;
-            }
-
-            .assignmentDiv{
-                background-color: lightgoldenrodyellow;
-                padding: 40px;
-                border-radius: 12px;
-                width: 100%;
-                max-width: 450px;
-                align-items: center;
-                text-align: center;
-                margin-bottom: 20px;
-                position: relative;
-            }
-
-            select,input{
-                padding: 10px;
-                text-align: center;
-            }
-
-        </style>
-    </head>
-    
-
-    <body>
-        
-        <div class="assignmentDiv">
-            <h1>Add Assignment</h1>
-            <form action="" id="assignmentForm">
-                <label for="assignmentTopic">Assignment Topic:</label>
-                <input type="text" id="AssignmentTopic" placeholder="Enter Assignment Tpoic:">
-
-                <label for="assignmentDueDate">Due Date:</label>
-                <input type="datetime" id="AssignmentDue">
-
-                <label for="AssignmentReminder1">Reminder 1:</label>
-                <input type="datetime" id="AssignmentR1">
-
-                <label for="AssignmentReminder1">Reminder 2:</label>
-                <input type="datetime" id="AssignmentR2">
-
-                <label for="AssignmentReminder1">Reminder 3:</label>
-                <input type="datetime" id="AssignmentR3">
-
-                <label for="groupMates">Group Mates:</label>
-                <input type="text" id="GroupMates" placeholder="Enter GroupMates ID:">
-
-                <label for="assignmentNotes">Assignment Notes:</label>
-                <input type="text" id="AssignmentNotes">
-
-                <label for="assignmentNotes">AI Notes:</label>
-                <input type="text" id="AINotes">
-
-                <label for="assignmentNotes">AI Prompts:</label>
-                <input type="text" id="AIPrompts">
-
-                <button onclick="addAssignments()">Add Assignments:</button>
-            </form>
-
-        
-        </div>
-    </body>
-    <script>
-
-        async function addAssignment(){
-            const assignment_topic = document.getElementById('AssignmentTopic').value;
-            const AssignmentDue = document.getElementById('AssignmentDue').value;
-            const name = document.getElementById('AssignmentR1').value;
-            const university = document.getElementById('AssignmentR2').value;
-            const department = document.getElementById('AssignmentR3').value;
-            const semester = document.getElementById('GroupMates').value;
-            const role=document.getElementById('AssignmentNotes').value;
-            const role_id=document.getElementById('RoleID').value
-            const phone = document.getElementById('RegPhone').value;
-           
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Assignments</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1d3557, #457b9d);
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+            color: #fff;
         }
 
+        .assignmentDiv {
+            background-color: #f1faee;
+            padding: 40px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+            color: #1d3557;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #1d3557;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 12px;
+            width: 100%;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: inset 0px 4px 6px rgba(0, 0, 0, 0.1);
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #457b9d;
+            box-shadow: 0px 0px 8px rgba(69, 123, 157, 0.6);
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #457b9d, #1d3557);
+            color: #fff;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #1d3557, #457b9d);
+            transform: translateY(-2px);
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="assignmentDiv">
+        <h1>Add Assignment</h1>
+        <form id="assignmentForm">
+            <label for="assignmentTopic">Assignment Topic:</label>
+            <input type="text" id="AssignmentTopic" placeholder="Enter Assignment Topic" required>
+
+            <label for="assignmentSubject">Assignment Subject:</label>
+            <input type="text" id="AssignmentSubject" placeholder="Enter Assignment Subject" required>
+            
+            <label for="assignmentDetails">Assignment Details:</label>
+            <input type="text" id="AssignmentDetails" placeholder="Enter About Assignment">
+
+            <label for="assignmentDueDate">Due Date:</label>
+            <input type="datetime-local" id="AssignmentDue" required>
+
+            <label for="AssignmentReminder1">Reminder 1:</label>
+            <input type="datetime-local" id="AssignmentR1">
+
+            <label for="AssignmentReminder2">Reminder 2:</label>
+            <input type="datetime-local" id="AssignmentR2">
+
+            <label for="AssignmentReminder3">Reminder 3:</label>
+            <input type="datetime-local" id="AssignmentR3">
+
+            <label for="groupMates">Group Mates:</label>
+            <input type="text" id="GroupMates" placeholder="Enter Group Mates ID">
+
+            <button type="button" onclick="addAssignment()">Add Assignment</button>
+        </form>
+    </div>
+
+    <script>
+        async function addAssignment(){
+            const assignment_topic = document.getElementById('AssignmentTopic').value;
+            const assignment_due = document.getElementById('AssignmentDue').value;
+            const assignment_subject = document.getElementById('AssignmentSubject').value;
+            const assignment_details = document.getElementById('AssignmentDetails').value;
+            const assignment_reminder1 = document.getElementById('AssignmentR1').value;
+            const assignment_reminder2 = document.getElementById('AssignmentR2').value;
+            const assignment_reminder3 = document.getElementById('AssignmentR3').value;
+            const group_mates = document.getElementById('GroupMates').value;
+
+            
+           
+
+            const response = await fetch('/tasks/addAssignments', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'Application/JSON',
+                },
+                body: JSON.stringify({
+                    assignment_topic,
+                    assignment_subject,
+                    assignment_details, 
+                    assignment_due, 
+                    assignment_reminder1, 
+                    assignment_reminder2, 
+                    assignment_reminder3, 
+                    group_mates, 
+                })
+            });
+
+            const responseData = await response.json();
+            if (responseData.taskAdded) {
+                alert('Assignment added successfully!');
+            } else {
+                alert('Failed to add assignment. Please try again.');
+            }
+        }
     </script>
+</body>
 </html>

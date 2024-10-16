@@ -50,7 +50,7 @@
         try {
             console.log("User ID: ", user_id);
             const response = await fetch('/tasks/getAssignments', {
-                method: 'POST',
+                method: 'GET',
                 headers: {
                     'Content-Type': 'Application/JSON',
                 },

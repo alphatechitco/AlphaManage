@@ -337,7 +337,9 @@
                 if (responseData.success) {
                     const AuthToken=responseData.token
                     const user_id=responseData.userID
+                    const class_id=responseData.class_id
                     const role=responseData.role;
+                
                     if(role!='cr'){
                     window.location.href = 'dashboard.html';
                     } else {
@@ -345,6 +347,7 @@
                     }
                     localStorage.setItem('AuthToken', AuthToken)
                     localStorage.setItem("user_id", user_id)
+                    localStorage.setItem("class_id", class_id)
                     localStorage.setItem("user_role", role)
                 }
 
